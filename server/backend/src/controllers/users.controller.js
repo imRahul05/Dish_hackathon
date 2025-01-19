@@ -72,11 +72,13 @@ const postFood = async (req, res, next) => {
 const loginAdmin = async (req, res, next) => {
     try {
         const {email, password} = req.body;
-        const data = await userModel.findOne({email, password});
-        if(data.length == 0 && data.role == "admin") {
+        console.log(email, password)
+        const data = await userModel.findOne({email, password}) || [];
+        console.log(data);
+        if(data==null ||  data.length == 0 || data.role != "admin") {
          return res.status(400).json({message:"Invalid email or password"});
         }
-        return res.status(2000).json({message:"Admin logged in successfully."});
+        return res.status(200).json({message:"Admin logged in successfully."});
 
     } catch (error) {
         next(error);

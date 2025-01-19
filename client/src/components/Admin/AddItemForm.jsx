@@ -7,7 +7,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { addDish } from "../api/api"; // Import the addDish function
+import { addDish } from "../../api/api"; // Import the addDish function
 import { ToastContainer, toast } from "react-toastify"; // Import toastify CSS
 
 const formSchema = z.object({
@@ -23,7 +23,7 @@ const formSchema = z.object({
   ),
 });
 
-export function AddItemForm() {
+export function AddItemForm({ Show }) {
   const [items, setItems] = useState([{ name: "", calorie: 0, quantity: 1 }]);
   const [open, setOpen] = useState(false); // State to control dialog open/close
   const form = useForm({
@@ -40,12 +40,11 @@ export function AddItemForm() {
         name: data.dishName,
         items: data.items,
       });
-      setTimeout(() => {
-        toast.success("Dish added successfully!");
-      }, 1000);
       handleCancel(); 
       setOpen(false);
+      toast.success("Dish item has been added succesfully!")
       console.log("done...........")
+//      Show();
     } catch (error) {
       console.error("Error saving dish:", error);
       toast.error("Failed to add dish.");
